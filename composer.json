@@ -2,6 +2,8 @@
     "name": "szogyenyid/php-builder",
     "description": "A PHP trait to automagically create a Builder for any class.",
     "type": "library",
+    "keywords": ["php", "trait", "builder"],
+    "homepage": "https://github.com/szogyenyid/php-builder",
     "license": "MIT",
     "autoload": {
         "psr-4": {
@@ -11,7 +13,8 @@
     "authors": [
         {
             "name": "szogyenyid",
-            "email": "szogyenyid@gmail.com"
+            "email": "szogyenyid@gmail.com",
+            "homepage": "https://szogyenyid.dev"
         }
     ],
     "require": {
