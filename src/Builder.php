@@ -53,7 +53,7 @@ trait Builder
             public function __call($name, $arguments)
             {
                 if (!str_starts_with($name, 'with')) {
-                    throw new Exception('Builder method names must start with "with".');
+                    throw BuilderException::invalidMethodName($name);
                 }
                 $property = str_replace('with', '', $name);
                 $setterName = 'set' . ucfirst($property);
@@ -69,7 +69,7 @@ trait Builder
                         )
                     )
                 ) {
-                    throw new Exception('No setter method for attribute $' . lcfirst($property) . ' found.');
+                    throw BuilderException::setterNotFound($property, $this->outerClass);
                 }
                 $this->instance->$setterName($arguments[0]);
                 return $this;
