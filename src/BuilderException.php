@@ -11,8 +11,9 @@ class BuilderException extends Exception
         return new self("Builder method names must start with \"with\". Invalid method name: $methodName");
     }
 
-    public static function setterNotFound(string $property, string $class): self
+    public static function notSettable(string $property, string $class): self
     {
-        return new self("No method with name \"set$property\" found in class $class");
+        $p = ucfirst($property);
+        return new self("No method with name \"set$p\" nor public property with name \"$property\" found in class $class");
     }
 }

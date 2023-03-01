@@ -2,8 +2,8 @@
 
 namespace Szogyenyid\PhpBuilder;
 
-use Exception;
 use ReflectionClass;
+use ReflectionException;
 
 /**
  * This trait allows you to automagically create a Builder (Design Pattern) for your class.
@@ -55,7 +55,19 @@ trait Builder
                 if (!str_starts_with($name, 'with')) {
                     throw BuilderException::invalidMethodName($name);
                 }
-                $property = str_replace('with', '', $name);
+                $property = lcfirst(str_replace('with', '', $name));
+                if ($setter = $this->getSetterName($property)) {
+                    $this->instance->$setter($arguments[0]);
+                    return $this;
+                }
+                if ($prop = $this->getPublicPropery($property)) {
+                    $this->instance->$prop = $arguments[0];
+                    return $this;
+                }
+                throw BuilderException::notSettable($property, $this->outerClass);
+            }
+            private function getSetterName(string $property): ?string
+            {
                 $setterName = 'set' . ucfirst($property);
                 $rc = new ReflectionClass($this->outerClass);
                 if (
@@ -69,10 +81,22 @@ trait Builder
                         )
                     )
                 ) {
-                    throw BuilderException::setterNotFound($property, $this->outerClass);
+                    return null;
                 }
-                $this->instance->$setterName($arguments[0]);
-                return $this;
+                return $setterName;
+            }
+            private function getPublicPropery(string $property): ?string
+            {
+                $rc = new ReflectionClass($this->outerClass);
+                try {
+                    $prop = $rc->getProperty($property);
+                    if ($prop->isPublic()) {
+                        return $property;
+                    }
+                    return null;
+                } catch (ReflectionException $e) {
+                    return null;
+                }
             }
         };
     }
