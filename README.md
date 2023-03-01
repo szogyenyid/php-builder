@@ -103,10 +103,10 @@ If you call a builder method (except `build()` and `reset()`) that does not star
 Builder method names must start with "with". Invalid method name: $methodName
 ```
 
-If a setter with the corresponding name as builder method is not found, the following message will be sent with a BuilderException:
+If a setter with the corresponding name as builder method is not found, and the given property is not public, the following message will be sent with a BuilderException:
 
 ```
-No method with name "$methodName" found in class $className
+No method with name "set$Property" nor public property with name "$property" found in class $class
 ```
 
 ## License
