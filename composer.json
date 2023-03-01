@@ -1,0 +1,18 @@
+{
+    "name": "szogyenyid/php-builder",
+    "description": "A PHP trait to automagically create a Builder for any class.",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Szogyenyid\\PhpBuilder\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "szogyenyid",
+            "email": "szogyenyid@gmail.com"
+        }
+    ],
+    "require": {}
+}
