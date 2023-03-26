@@ -3,7 +3,6 @@
 namespace Szogyenyid\PhpBuilder;
 
 use ReflectionClass;
-use ReflectionException;
 
 /**
  * This trait allows you to automagically create a Builder (Design Pattern) for your class.
@@ -11,7 +10,8 @@ use ReflectionException;
 trait Builder
 {
     /**
-     * This method returns a builder object. It can be used with your class' setter methods by changing "set" to "with".
+     * This method returns a builder object. It can be used with all of your class' properties by calling the
+     * "with" + PropertyName methods, e.g. `withName()` to set `$name` property of your class.
      */
     public static function builder()
     {
