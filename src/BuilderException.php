@@ -14,6 +14,6 @@ class BuilderException extends Exception
     public static function notSettable(string $property, string $class): self
     {
         $p = ucfirst($property);
-        return new self("No property with name \"$property\" found in class $class");
+        return new self("No property with name \"$p\" found in class $class");
     }
 }
