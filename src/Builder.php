@@ -56,47 +56,15 @@ trait Builder
                     throw BuilderException::invalidMethodName($name);
                 }
                 $property = lcfirst(str_replace('with', '', $name));
-                if ($setter = $this->getSetterName($property)) {
-                    $this->instance->$setter($arguments[0]);
-                    return $this;
-                }
-                if ($prop = $this->getPublicPropery($property)) {
-                    $this->instance->$prop = $arguments[0];
-                    return $this;
+                $r = new ReflectionClass($this->instance);
+                foreach ($r->getProperties() as $prop) {
+                    if ($prop->getName() === $property) {
+                        $prop->setAccessible(true);
+                        $prop->setValue($this->instance, $arguments[0]);
+                        return $this;
+                    }
                 }
                 throw BuilderException::notSettable($property, $this->outerClass);
-            }
-            private function getSetterName(string $property): ?string
-            {
-                $setterName = 'set' . ucfirst($property);
-                $rc = new ReflectionClass($this->outerClass);
-                if (
-                    !in_array(
-                        $setterName,
-                        array_map(
-                            function ($e) {
-                                return $e->getName();
-                            },
-                            $rc->getMethods()
-                        )
-                    )
-                ) {
-                    return null;
-                }
-                return $setterName;
-            }
-            private function getPublicPropery(string $property): ?string
-            {
-                $rc = new ReflectionClass($this->outerClass);
-                try {
-                    $prop = $rc->getProperty($property);
-                    if ($prop->isPublic()) {
-                        return $property;
-                    }
-                    return null;
-                } catch (ReflectionException $e) {
-                    return null;
-                }
             }
         };
     }
