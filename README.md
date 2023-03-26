@@ -112,7 +112,7 @@ All of the builder's methods will follow the names of the properties prepending 
 
 If Builder encounters any error, a `BuilderException` will be thrown.
 
-If you call a builder method (except `build()` and `reset()`) that does not start with `with`, the an exception with the following message is thrown:
+If you call a builder method (except `build()` and `reset()`) that does not start with `with`, an exception with the following message is thrown:
 
 ```
 Builder method names must start with "with". Invalid method name: $methodName
