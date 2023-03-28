@@ -13,6 +13,6 @@ class BuilderException extends Exception
 
     public static function notSettable(string $property, string $class): self
     {
-        return new self(sprintf('No property with name: %s found in class: %', $property, $class));
+        return new self(sprintf('No property with name: %s found in class: %s', $property, $class));
     }
 }
