@@ -52,7 +52,7 @@ trait Builder
              */
             public function __call($name, $arguments)
             {
-                if (!str_starts_with($name, 'with')) {
+                if (strpos($name, 'with') !== 0) {
                     throw BuilderException::invalidMethodName($name);
                 }
                 $property = lcfirst(str_replace('with', '', $name));
