@@ -46,9 +46,10 @@ trait Builder
              * This method is called when a method is called on the builder object.
              * It will try to find a setter method for the attribute and call it with the given value.
              *
-             * @param string $name
-             * @param array $arguments
+             * @param string $name The name of the method called.
+             * @param array $arguments The arguments passed to the method.
              * @return self
+             * @throws BuilderException If the method called is not a setter method.
              */
             public function __call($name, $arguments)
             {
